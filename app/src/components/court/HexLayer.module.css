@@ -1,0 +1,14 @@
+.layer {
+  stroke: var(--surface);
+  stroke-width: 0.14;
+}
+
+.hex {
+  transition: opacity var(--dur-fast) var(--ease);
+}
+
+.hex:hover {
+  opacity: 0.75;
+  stroke: var(--ink-primary);
+  stroke-width: 0.3;
+}

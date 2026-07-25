@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Shot profile dashboard for the 2024-25 season."
+    />
+    <meta name="theme-color" content="#5a2d81" />
+    <title>Kings Shot Lab</title>
+    <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
+    <style>
+      /* Painted before React so the first frame is never a white flash*/
+      html { background: #0e0c11; }
+          html[data-theme='light'] { background: #f2eff5; }
+      @media (prefers-color-scheme: light) {
+        html:not([data-theme='dark']) { background: #f2eff5; }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+    <noscript>JS not enabled on this browser.</noscript>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

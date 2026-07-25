@@ -1,0 +1,64 @@
+
+.court {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.floor {
+  fill: var(--court-fill);
+}
+
+.boundary {
+  fill: none;
+  stroke: var(--court-line);
+  stroke-width: 0.35;
+}
+
+.line {
+  fill: none;
+  stroke: var(--court-line);
+  stroke-width: 0.22;
+  stroke-linecap: round;
+}
+
+.lineDashed {
+  composes: line;
+  stroke-dasharray: 0.9 0.7;
+}
+
+.paint {
+  fill: var(--court-paint);
+  stroke: var(--court-line);
+  stroke-width: 0.22;
+}
+
+.backboard {
+  stroke: var(--court-line);
+  stroke-width: 0.4;
+  stroke-linecap: round;
+}
+
+.rim {
+  fill: none;
+  stroke: var(--court-line);
+  stroke-width: 0.25;
+}
+
+.grid line {
+  stroke: var(--line-hairline);
+  stroke-width: 0.1;
+}
+
+.axis line {
+  stroke: var(--line-strong);
+  stroke-width: 0.16;
+  stroke-dasharray: 1.2 0.9;
+}
+
+.tick text {
+  fill: var(--ink-muted);
+  font-size: 1.5px;
+  font-family: var(--font-mono);
+  letter-spacing: -0.02em;
+}

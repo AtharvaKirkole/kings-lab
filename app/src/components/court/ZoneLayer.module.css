@@ -1,0 +1,46 @@
+.zone {
+  cursor: pointer;
+  outline: none;
+}
+
+.shape {
+  transition: opacity var(--dur-fast) var(--ease);
+}
+
+.zone:hover .shape {
+  opacity: 0.82;
+}
+
+.zone:focus-visible .shape,
+.selected .shape {
+  stroke: var(--kings-purple-bright);
+  stroke-width: 0.5;
+}
+
+.labels {
+  pointer-events: none;
+}
+
+.primaryLabel {
+  fill: var(--ink-primary);
+  font-size: 2.5px;
+  font-weight: 700;
+  text-anchor: middle;
+  font-variant-numeric: tabular-nums;
+  paint-order: stroke;
+  stroke: var(--surface);
+  stroke-width: 0.6;
+  stroke-linejoin: round;
+}
+
+.secondaryLabel {
+  fill: var(--ink-secondary);
+  font-size: 1.5px;
+  font-weight: 600;
+  text-anchor: middle;
+  font-variant-numeric: tabular-nums;
+  paint-order: stroke;
+  stroke: var(--surface);
+  stroke-width: 0.5;
+  stroke-linejoin: round;
+}

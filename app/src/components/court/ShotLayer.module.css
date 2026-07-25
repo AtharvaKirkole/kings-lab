@@ -1,0 +1,14 @@
+
+.made circle {
+  fill: var(--status-good);
+  stroke: var(--surface);
+  stroke-width: 0.12;
+  opacity: 0.9;
+}
+
+.missed circle {
+  fill: none;
+  stroke: var(--status-critical);
+  stroke-width: 0.22;
+  opacity: 0.62;
+}

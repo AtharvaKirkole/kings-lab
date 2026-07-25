@@ -1,0 +1,207 @@
+
+.segmented {
+  display: inline-flex;
+  padding: 3px;
+  gap: 2px;
+  background: var(--surface-sunken);
+  border: 1px solid var(--line-hairline);
+  border-radius: var(--radius-pill);
+}
+
+.segment {
+  padding: 5px 13px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--ink-secondary);
+  border-radius: var(--radius-pill);
+  white-space: nowrap;
+  transition: background var(--dur-fast) var(--ease), color var(--dur-fast) var(--ease);
+}
+
+.segment:hover {
+  color: var(--ink-primary);
+  background: var(--surface-inset);
+}
+
+.segment[aria-pressed='true'] {
+  background: var(--kings-purple);
+  color: #ffffff;
+  box-shadow: var(--shadow-sm);
+}
+
+.segmentedSm .segment {
+  padding: 4px 10px;
+  font-size: 11.5px;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 10px;
+  font-size: 12px;
+  font-weight: 550;
+  color: var(--ink-secondary);
+  background: var(--surface-sunken);
+  border: 1px solid var(--line-hairline);
+  border-radius: var(--radius-pill);
+  max-width: 100%;
+  transition: all var(--dur-fast) var(--ease);
+}
+
+.chip:hover {
+  border-color: var(--line-strong);
+  color: var(--ink-primary);
+}
+
+.chip[aria-pressed='true'] {
+  background: var(--kings-purple);
+  border-color: var(--kings-purple);
+  color: #ffffff;
+}
+
+.chipLabel {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.chipCount {
+  font-size: 10.5px;
+  font-weight: 600;
+  opacity: 0.72;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.fieldLabel {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+}
+
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2) var(--space-4);
+}
+
+.legendTitle {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+}
+
+.legendItems {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2) var(--space-4);
+  list-style: none;
+  padding: 0;
+}
+
+.legendItem {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11.5px;
+  color: var(--ink-secondary);
+  white-space: nowrap;
+}
+
+.legendCompact .legendItem {
+  font-size: 11px;
+}
+
+.legendSwatch {
+  width: 11px;
+  height: 11px;
+  border-radius: 3px;
+  box-shadow: inset 0 0 0 1px var(--border-ring);
+  flex: none;
+}
+
+.legendRing {
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  border: 2px solid;
+  flex: none;
+}
+
+.scaleLegend {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.scaleEnd {
+  font-size: 10.5px;
+  font-weight: 600;
+  color: var(--ink-muted);
+  white-space: nowrap;
+}
+
+.scaleBar {
+  display: flex;
+  height: 9px;
+  border-radius: var(--radius-pill);
+  overflow: hidden;
+  box-shadow: inset 0 0 0 1px var(--border-ring);
+}
+
+.scaleBar span {
+  width: 20px;
+  height: 100%;
+}
+
+.buttonGhost,
+.buttonSolid {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  font-size: 12px;
+  font-weight: 600;
+  border-radius: var(--radius-pill);
+  transition: all var(--dur-fast) var(--ease);
+  white-space: nowrap;
+}
+
+.buttonGhost {
+  color: var(--ink-secondary);
+  border: 1px solid var(--line-hairline);
+  background: var(--surface-sunken);
+}
+
+.buttonGhost:hover:not(:disabled) {
+  color: var(--ink-primary);
+  border-color: var(--line-strong);
+}
+
+.buttonSolid {
+  color: #ffffff;
+  background: var(--kings-purple);
+  border: 1px solid var(--kings-purple);
+}
+
+.buttonSolid:hover:not(:disabled) {
+  background: var(--kings-purple-bright);
+  border-color: var(--kings-purple-bright);
+}
+
+.buttonGhost:disabled,
+.buttonSolid:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}

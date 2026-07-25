@@ -1,0 +1,213 @@
+.rail {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 292px;
+  flex: none;
+  background: var(--surface);
+  border-right: 1px solid var(--line-hairline);
+  height: 100%;
+  overflow: hidden;
+}
+
+.resizing {
+  user-select: none;
+}
+
+.resizer {
+  position: absolute;
+  top: 0;
+  right: -3px;
+  bottom: 0;
+  width: 8px;
+  z-index: 5;
+  cursor: col-resize;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  touch-action: none;
+}
+
+.resizerGrip {
+  width: 2px;
+  height: 100%;
+  background: transparent;
+  transition: background var(--dur-fast) var(--ease);
+}
+
+.resizer:hover .resizerGrip,
+.resizer:focus-visible .resizerGrip,
+.resizing .resizerGrip {
+  background: var(--kings-purple-bright);
+}
+
+.resizer:focus-visible {
+  outline: none;
+}
+
+/* A subtle centred dot cluster hints the handle is grabbable on hover. */
+.resizer::after {
+  content: '';
+  position: absolute;
+  width: 4px;
+  height: 26px;
+  border-radius: var(--radius-pill);
+  background: var(--line-strong);
+  opacity: 0;
+  transition: opacity var(--dur-fast) var(--ease);
+}
+
+.resizer:hover::after,
+.resizing .resizer::after {
+  opacity: 1;
+}
+
+.railHeader {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding: var(--space-4) var(--space-4) var(--space-3);
+  border-bottom: 1px solid var(--line-hairline);
+}
+
+.railTitle {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--ink-primary);
+}
+
+.railSubtitle {
+  margin-top: 2px;
+  font-size: 11.5px;
+  color: var(--ink-secondary);
+}
+
+.railActions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.closeButton {
+  display: none;
+  width: 28px;
+  height: 28px;
+  font-size: 20px;
+  line-height: 1;
+  color: var(--ink-secondary);
+  border-radius: var(--radius-sm);
+}
+
+.railBody {
+  flex: 1;
+  overflow-y: auto;
+  padding: var(--space-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+.group {
+  border: none;
+  padding: 0;
+  margin: 0;
+  min-width: 0;
+}
+
+.groupHeader {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-2);
+  width: 100%;
+  padding: 0;
+  margin-bottom: var(--space-2);
+}
+
+.groupTitle {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+}
+
+.clearLink {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--kings-purple-bright);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.dateRow {
+  display: flex;
+  gap: var(--space-2);
+}
+
+.dateField {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+  min-width: 0;
+}
+
+.dateField span {
+  font-size: 10.5px;
+  font-weight: 600;
+  color: var(--ink-muted);
+}
+
+.dateField input {
+  width: 100%;
+  padding: 5px 8px;
+  font-size: 11.5px;
+  color: var(--ink-primary);
+  background: var(--surface-sunken);
+  border: 1px solid var(--line-hairline);
+  border-radius: var(--radius-sm);
+}
+
+.hint {
+  margin-top: 6px;
+  font-size: 10.5px;
+  color: var(--ink-muted);
+}
+
+/* On narrow screens the rail becomes an overlay drawer. */
+@media (max-width: 1024px) {
+  .rail {
+    position: fixed;
+    inset: 0 auto 0 0;
+    z-index: 40;
+    width: min(320px, 88vw);
+    transform: translateX(-100%);
+    visibility: hidden;
+    transition:
+      transform var(--dur-base) var(--ease),
+      visibility 0s linear var(--dur-base);
+    box-shadow: var(--shadow-lg);
+  }
+
+  .railOpen {
+    transform: translateX(0);
+    visibility: visible;
+    transition:
+      transform var(--dur-base) var(--ease),
+      visibility 0s;
+  }
+
+  .closeButton {
+    display: block;
+  }
+}

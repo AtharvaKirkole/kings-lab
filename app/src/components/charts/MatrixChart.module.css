@@ -1,0 +1,106 @@
+.matrix {
+  border-collapse: separate;
+  border-spacing: 2px;
+  width: 100%;
+  min-width: 480px;
+}
+
+.corner {
+  position: relative;
+  min-width: 118px;
+  height: 42px;
+  padding: 0;
+}
+
+.cornerRow,
+.cornerCol {
+  position: absolute;
+  font-size: 10px;
+  font-weight: 650;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+}
+
+.cornerRow {
+  left: 2px;
+  bottom: 4px;
+}
+
+.cornerCol {
+  right: 4px;
+  top: 4px;
+}
+
+.colHeader {
+  padding: var(--space-2) var(--space-1);
+  font-size: 11px;
+  font-weight: 650;
+  letter-spacing: 0.02em;
+  color: var(--ink-secondary);
+  text-align: center;
+  vertical-align: bottom;
+}
+
+.rowHeader {
+  padding: var(--space-2) var(--space-3) var(--space-2) 0;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--ink-secondary);
+  text-align: left;
+  white-space: nowrap;
+}
+
+.cell {
+  height: 48px;
+  padding: var(--space-2) var(--space-1);
+  text-align: center;
+  border-radius: var(--radius-sm);
+  vertical-align: middle;
+  transition: transform var(--dur-fast) var(--ease);
+}
+
+.cell:hover {
+  transform: scale(1.03);
+}
+
+/* Diagonal texture: the non-colour channel for cells too thin to trust. */
+.cellLowSample {
+  background-image: repeating-linear-gradient(
+    45deg,
+    transparent,
+    transparent 3px,
+    var(--surface) 3px,
+    var(--surface) 5px
+  );
+}
+
+.cellValue {
+  display: block;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--ink-primary);
+  text-shadow:
+    0 0 3px var(--surface),
+    0 0 3px var(--surface);
+}
+
+.cellCount {
+  display: block;
+  margin-top: 1px;
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--ink-secondary);
+  text-shadow:
+    0 0 3px var(--surface),
+    0 0 3px var(--surface);
+}
+
+.cellEmpty {
+  height: 48px;
+  text-align: center;
+  font-size: 12px;
+  color: var(--ink-muted);
+  background: var(--surface-sunken);
+  border-radius: var(--radius-sm);
+}

@@ -1,0 +1,132 @@
+.chart {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  width: 100%;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: minmax(90px, 148px) 1fr minmax(76px, auto);
+  align-items: center;
+  gap: var(--space-3);
+  width: 100%;
+  text-align: left;
+  padding: 2px 0;
+  border-radius: var(--radius-sm);
+}
+
+.rowInteractive {
+  cursor: pointer;
+  transition: background var(--dur-fast) var(--ease);
+}
+
+.rowInteractive:hover {
+  background: var(--surface-inset);
+}
+
+.rowInteractive[aria-pressed='true'] .label {
+  color: var(--kings-purple-bright);
+  font-weight: 700;
+}
+
+.label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 550;
+  color: var(--ink-secondary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.lowSample {
+  flex: none;
+  padding: 1px 5px;
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  background: var(--surface-sunken);
+  border: 1px solid var(--line-hairline);
+  border-radius: var(--radius-pill);
+}
+
+.track {
+  position: relative;
+  height: 16px;
+  background: var(--surface-sunken);
+  border-radius: var(--radius-sm);
+  overflow: visible;
+}
+
+.bar {
+  position: absolute;
+  inset: 0 auto 0 0;
+  border-radius: 0 4px 4px 0;
+  min-width: 2px;
+  transition: width var(--dur-base) var(--ease);
+}
+
+.baseline {
+  position: absolute;
+  top: -3px;
+  bottom: -3px;
+  width: 2px;
+  margin-left: -1px;
+  background: var(--ink-primary);
+  border-radius: 1px;
+  opacity: 0.75;
+}
+
+.value {
+  display: flex;
+  align-items: baseline;
+  justify-content: flex-end;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 650;
+  color: var(--ink-primary);
+  white-space: nowrap;
+}
+
+.detail {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--ink-muted);
+}
+
+.footnote {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: var(--space-2);
+  font-size: 11px;
+  color: var(--ink-muted);
+}
+
+.baselineKey {
+  display: inline-block;
+  width: 2px;
+  height: 11px;
+  background: var(--ink-primary);
+  opacity: 0.75;
+  border-radius: 1px;
+}
+
+.empty {
+  padding: var(--space-5) 0;
+  font-size: 12.5px;
+  color: var(--ink-muted);
+  text-align: center;
+}
+
+@media (max-width: 620px) {
+  .row {
+    grid-template-columns: minmax(72px, 108px) 1fr minmax(64px, auto);
+    gap: var(--space-2);
+  }
+}

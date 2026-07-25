@@ -1,0 +1,106 @@
+.screen {
+  position: fixed;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background:
+    radial-gradient(1100px 620px at 22% 18%, rgba(123, 75, 172, 0.22), transparent 62%),
+    radial-gradient(760px 520px at 82% 84%, rgba(90, 45, 129, 0.16), transparent 60%),
+    var(--plane);
+  z-index: 100;
+  animation: fade var(--dur-base) var(--ease);
+}
+
+.stage {
+  display: flex;
+  align-items: center;
+  gap: var(--space-6);
+  padding: var(--space-6);
+}
+
+.court {
+  width: 168px;
+  height: 168px;
+  flex: none;
+}
+
+.arc {
+  fill: none;
+  stroke: var(--kings-purple-bright);
+  stroke-width: 0.5;
+  stroke-linecap: round;
+  stroke-dasharray: 120;
+  animation: draw 2.4s var(--ease) infinite;
+}
+
+.rim {
+  fill: none;
+  stroke: var(--ink-muted);
+  stroke-width: 0.4;
+}
+
+.ball {
+  fill: var(--kings-purple-bright);
+  filter: drop-shadow(0 0 4px rgba(123, 75, 172, 0.65));
+}
+
+.copy {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.brand {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.34em;
+  text-transform: uppercase;
+  color: var(--kings-purple-bright);
+}
+
+.title {
+  font-size: 34px;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+  color: var(--ink-primary);
+}
+
+.message {
+  margin-top: var(--space-2);
+  font-size: 13px;
+  color: var(--ink-secondary);
+}
+
+@keyframes draw {
+  0% {
+    stroke-dashoffset: 120;
+    opacity: 0.25;
+  }
+  55% {
+    stroke-dashoffset: 0;
+    opacity: 1;
+  }
+  100% {
+    stroke-dashoffset: -120;
+    opacity: 0.25;
+  }
+}
+
+@keyframes fade {
+  from {
+    opacity: 0;
+  }
+}
+
+@media (max-width: 600px) {
+  .stage {
+    flex-direction: column;
+    gap: var(--space-4);
+    text-align: center;
+  }
+  .court {
+    width: 128px;
+    height: 128px;
+  }
+}
