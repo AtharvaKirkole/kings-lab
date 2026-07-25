@@ -107,8 +107,3 @@ export const ZONE_SHAPES: ZoneShape[] = [
     label: { x: -40, y: 23.5 },
   },
 ];
-
-/**
- * `Backcourt` has no shape: it lives in the defensive half, off this view.
- */
-export const UNDRAWN_ZONES = ['Backcourt'];

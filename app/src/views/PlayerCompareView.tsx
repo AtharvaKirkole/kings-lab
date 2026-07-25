@@ -11,7 +11,7 @@ import { Card } from '../components/ui/Card';
 import { Button, ScaleLegend } from '../components/ui/Controls';
 import { EmptyState } from '../components/ui/States';
 import { StatTile } from '../components/ui/StatTile';
-import type { Dataset, Shot } from '../data/types';
+import type { Shot } from '../data/types';
 import { EFFICIENCY_LEGEND, efficiencyColor } from '../lib/colorScale';
 import { ZONE_ORDER } from '../lib/court';
 import { int, pct, signed } from '../lib/format';
@@ -23,7 +23,6 @@ import { useFilterStore } from '../state/useFilters';
 import styles from './PlayerCompareView.module.css';
 
 interface PlayerCompareViewProps {
-  dataset: Dataset;
   shots: Shot[];
   teamBaseline: Shot[];
 }
@@ -31,12 +30,11 @@ interface PlayerCompareViewProps {
 interface PlayerRow extends ShotSummary {
   id: string;
   name: string;
-  games: number;
   pointsAdded: number;
   rimRate: number;
 }
 
-export function PlayerCompareView({ dataset, shots, teamBaseline }: PlayerCompareViewProps) {
+export function PlayerCompareView({ shots, teamBaseline }: PlayerCompareViewProps) {
   const selectedPlayers = useFilterStore((s) => s.players);
   const togglePlayer = useFilterStore((s) => s.toggle);
   const setPlayers = useFilterStore((s) => s.setMany);
@@ -49,7 +47,6 @@ export function PlayerCompareView({ dataset, shots, teamBaseline }: PlayerCompar
   const rows: PlayerRow[] = useMemo(() => {
     const zones = ZONE_ORDER as string[];
     const teamZones = groupBy(teamBaseline, (s) => s.zone, zones);
-    const gamesById = new Map(dataset.players.map((p) => [p.id, p.games]));
 
     return groupBy(teamBaseline, (s) => s.playerId)
       .filter((g) => g.attempts > 0)
@@ -59,13 +56,12 @@ export function PlayerCompareView({ dataset, shots, teamBaseline }: PlayerCompar
         return {
           id: g.key,
           name: first.playerName,
-          games: gamesById.get(g.key) ?? new Set(g.shots.map((s) => s.gameDate)).size,
           pointsAdded: pointsAddedVsBaseline(playerZones, teamZones),
           rimRate: g.shots.filter((s) => s.zone === 'Restricted Area').length / g.attempts,
           ...summarise(g.shots),
         };
       });
-  }, [teamBaseline, dataset.players]);
+  }, [teamBaseline]);
 
   const scatter: ScatterDatum[] = useMemo(
     () =>

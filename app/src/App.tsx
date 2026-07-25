@@ -125,7 +125,7 @@ function Dashboard({ dataset }: { dataset: Dataset }) {
             {view === 'court' && <ShotChartView shots={shots} teamBaseline={teamBaseline} />}
             {view === 'efficiency' && <EfficiencyView shots={shots} />}
             {view === 'players' && (
-              <PlayerCompareView dataset={dataset} shots={shots} teamBaseline={teamBaseline} />
+              <PlayerCompareView shots={shots} teamBaseline={teamBaseline} />
             )}
           </ErrorBoundary>
 

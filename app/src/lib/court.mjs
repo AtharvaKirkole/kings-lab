@@ -35,10 +35,6 @@ export function isThree(x, y) {
   return distanceFromHoop(x, y) >= THREE_POINT_ARC_RADIUS;
 }
 
-export function shotValue(x, y) {
-  return isThree(x, y) ? 3 : 2;
-}
-
 export function isBackcourt(x) {
   return x > 0;
 }
