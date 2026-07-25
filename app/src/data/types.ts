@@ -1,15 +1,11 @@
-/** Domain types for the decoded shot dataset. */
 
-/** A single shot attempt, fully denormalised for direct use by the UI. */
 export interface Shot {
-  /** Index into `Dataset.players`. Kept numeric so filtering stays cheap. */
   playerCode: number;
   playerId: string;
   playerName: string;
 
   gameDate: string;
   period: number;
-  /** Seconds remaining in the period at release. */
   gameClock: number;
   shotClock: number;
 
@@ -30,7 +26,6 @@ export interface Shot {
   catchAndShoot: boolean;
   dribbles: number;
   dribbleBucket: string;
-  /** Distance travelled by the preceding pass, or `null` when there was none. */
   passDistance: number | null;
 
   contested: boolean;
@@ -43,7 +38,6 @@ export interface Shot {
 
 export interface Player {
   id: string;
-  /** Position in the encoded player dictionary; matches `Shot.playerCode`. */
   code: number;
   name: string;
   attempts: number;
@@ -59,12 +53,10 @@ export interface DatasetMeta {
   gameCount: number;
 }
 
-/** The decoded dataset held in memory for the life of the session. */
 export interface Dataset {
   meta: DatasetMeta;
   players: Player[];
   shots: Shot[];
-  /** Distinct values per categorical field, in canonical display order. */
   options: {
     shotTypes: string[];
     complexShotTypes: string[];

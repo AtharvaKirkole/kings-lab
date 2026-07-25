@@ -1,45 +1,33 @@
 /**
- * Court geometry and shot classification - the single source of truth for every
- * spatial derivation. Authored as JSDoc-typed `.mjs` so the ETL script (bare
- * Node) and the app (Vite) can share one copy; `court.ts` re-exports it typed.
- *
- * Coordinates (per the data dictionary): origin at centre court, x baseline-to-
- * baseline [-47,47], y sideline-to-sideline [-25,25], offence attacks -x.
- * `-y` is the offence's left (an assumption; flip SIDE_SIGN to invert).
+ * Court geometry and shot classification this is the source of truth for every
+ * spatial derivation. Authored as .mjs so the ETL script and the app can share one copy; `court.ts` re-exports it typed.
  */
 
-// --- Court dimensions (feet) ------------------------------------------------
 export const COURT_LENGTH = 94;
 export const COURT_WIDTH = 50;
-export const HALF_LENGTH = COURT_LENGTH / 2; // 47
-export const HALF_WIDTH = COURT_WIDTH / 2; // 25
+export const HALF_LENGTH = COURT_LENGTH / 2; 
+export const HALF_WIDTH = COURT_WIDTH / 2; 
 
-/** Rim centre: 5.25 ft in from the baseline on the offence's half. */
-export const HOOP_X = -(HALF_LENGTH - 5.25); // -41.75
+export const HOOP_X = -(HALF_LENGTH - 5.25); 
 export const HOOP_Y = 0;
 
-// --- Shot geometry ----------------------------------------------------------
 export const RESTRICTED_AREA_RADIUS = 4;
 export const THREE_POINT_ARC_RADIUS = 23.75;
 export const CORNER_THREE_DISTANCE = 22;
-/** Beyond |y| = 22 the arc is cut off; the line runs straight to the baseline. */
 export const CORNER_THREE_Y = 22;
 
-export const PAINT_HALF_WIDTH = 8; // 16 ft lane
-export const FREE_THROW_LINE_X = -(HALF_LENGTH - 19); // -28
+export const PAINT_HALF_WIDTH = 8;
+export const FREE_THROW_LINE_X = -(HALF_LENGTH - 19); 
 export const FREE_THROW_CIRCLE_RADIUS = 6;
 export const BACKBOARD_X = -(HALF_LENGTH - 4);
 export const RIM_RADIUS = 0.75;
 
-/** `-y` is the offence's left. Flip to +1 to invert every left/right label. */
 export const SIDE_SIGN = -1;
 
-/** Distance in feet from the release point to the rim centre. */
 export function distanceFromHoop(x, y) {
   return Math.hypot(x - HOOP_X, y - HOOP_Y);
 }
 
-/** Behind the 3pt line: 23.75 ft arc, truncated to a straight 22 ft in the corners. */
 export function isThree(x, y) {
   if (Math.abs(y) >= CORNER_THREE_Y) {
     return distanceFromHoop(x, y) >= CORNER_THREE_DISTANCE;
@@ -47,12 +35,10 @@ export function isThree(x, y) {
   return distanceFromHoop(x, y) >= THREE_POINT_ARC_RADIUS;
 }
 
-/** Point value, ignoring free throws. */
 export function shotValue(x, y) {
   return isThree(x, y) ? 3 : 2;
 }
 
-/** Released from the defensive half - a desperation heave. */
 export function isBackcourt(x) {
   return x > 0;
 }
@@ -61,13 +47,11 @@ export function inPaint(x, y) {
   return Math.abs(y) <= PAINT_HALF_WIDTH && x <= FREE_THROW_LINE_X;
 }
 
-/** 'Left' / 'Right' / 'Center' from the offence's point of view. */
 export function side(y) {
   if (Math.abs(y) < PAINT_HALF_WIDTH) return 'Center';
   return y * SIDE_SIGN > 0 ? 'Left' : 'Right';
 }
 
-/** One of 11 exhaustive, non-overlapping zones, matching the standard NBA chart. */
 export function zone(x, y) {
   if (isBackcourt(x)) return 'Backcourt';
 
@@ -84,7 +68,6 @@ export function zone(x, y) {
   return 'Above the Break 3';
 }
 
-/** Distance bands in feet; threes collapse into one band. */
 export const RANGE_BANDS = /** @type {const} */ ([
   ['At Rim', 0, 4],
   ['Short Paint', 4, 10],
@@ -92,7 +75,6 @@ export const RANGE_BANDS = /** @type {const} */ ([
   ['Long Two', 16, 23.75],
 ]);
 
-/** Coarse distance bucket. */
 export function rangeBand(x, y) {
   if (isBackcourt(x) || isThree(x, y)) return 'Three';
   const dist = distanceFromHoop(x, y);
@@ -102,7 +84,6 @@ export function rangeBand(x, y) {
   return 'Three';
 }
 
-/** Canonical display order, so the UI never has to sort zones itself. */
 export const ZONE_ORDER = [
   'Restricted Area',
   'Paint (Non-RA)',
@@ -121,7 +102,6 @@ export const RANGE_ORDER = ['At Rim', 'Short Paint', 'Floater Range', 'Long Two'
 
 /** Possession stage - faster to read than raw seconds. */
 export function shotClockBucket(seconds) {
-  if (!Number.isFinite(seconds)) return 'Unknown';
   if (seconds >= 18) return 'Early (24-18)';
   if (seconds >= 7) return 'Middle (18-7)';
   if (seconds >= 4) return 'Late (7-4)';

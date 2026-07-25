@@ -1,8 +1,5 @@
 /**
- * Shooting metrics and grouped aggregation. All aggregation funnels through
- * `summarise` / `groupBy`, so "eFG%" means one thing everywhere. Metrics come
- * from raw counts (never averaged from other rates), so totals stay consistent
- * however a slice is composed.
+ * Shooting metrics and grouped aggregation.
  */
 
 import { descending, group, sum } from 'd3-array';
@@ -16,26 +13,16 @@ export interface ShotSummary {
   attempts: number;
   makes: number;
   points: number;
-  /** Field-goal percentage, 0-1. */
   fg: number;
-  /** Effective FG%, 0-1: credits a three at 1.5x a two so shapes stay comparable. */
   efg: number;
-  /** Points per attempt - same info as eFG%, on a scale coaches use. */
   pps: number;
   threeAttempts: number;
   threeMakes: number;
-  /** Share of attempts that were threes, 0-1. */
   threeRate: number;
-  /**
-   * Share of MAKES (not attempts) that were assisted, 0-1. An assist only lands
-   * on a make, so a makes denominator answers "when he scores, how often set up?"
-   * - an attempts denominator would just re-encode FG%.
-   */
   assistedRate: number;
   contestedRate: number;
   foulRate: number;
   blockRate: number;
-  /** True when `attempts` is too small to trust the rates. */
   lowSample: boolean;
 }
 
@@ -80,13 +67,11 @@ export function summarise(shots: readonly Shot[]): ShotSummary {
     makes,
     points,
     fg: rate(makes, attempts),
-    // eFG% = (FGM + 0.5 x 3PM) / FGA
     efg: rate(makes + 0.5 * threeMakes, attempts),
     pps: rate(points, attempts),
     threeAttempts,
     threeMakes,
     threeRate: rate(threeAttempts, attempts),
-    // % of makes that were assisted (see the field doc for why makes, not FGA).
     assistedRate: rate(assisted, makes),
     contestedRate: rate(contested, attempts),
     foulRate: rate(fouled, attempts),
@@ -97,7 +82,6 @@ export function summarise(shots: readonly Shot[]): ShotSummary {
 
 export interface Group<K extends string | number = string> extends ShotSummary {
   key: K;
-  /** This group's share of the parent slice's attempts, 0-1. */
   share: number;
   shots: Shot[];
 }
@@ -129,17 +113,13 @@ export function groupBy<K extends string | number>(
 }
 
 /**
- * A player's profile vs a baseline (normally the team). `efgDelta` = "better
- * here?"; `shareDelta` = "goes here more often?" - separating shot-making from
- * shot-selection, the distinction a staff acts on.
+ * A player's profile vs a baseline
  */
 export interface Delta {
   key: string;
   player: ShotSummary;
   baseline: ShotSummary;
-  /** Player eFG% minus baseline eFG%, in percentage points (already x100). */
   efgDelta: number;
-  /** Player attempt share minus baseline attempt share, in percentage points. */
   shareDelta: number;
   playerShare: number;
   baselineShare: number;
@@ -172,9 +152,7 @@ export function compareToBaseline<K extends string>(
 }
 
 /**
- * Points above/below what these shots would score at baseline rates. Sums
- * per-zone (playerPPS − basePPS) × attempts - turns scattered % edges into one
- * number in points, the unit roster decisions are argued in.
+ * Points above/below what these shots would score at baseline rates. 
  */
 export function pointsAddedVsBaseline<K extends string>(
   playerGroups: readonly Group<K>[],

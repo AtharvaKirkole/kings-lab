@@ -2,8 +2,6 @@
  * App header: identity, view nav, dataset provenance, theme toggle. The season range and shot count sit up here 
  */
 
-import type { DatasetMeta } from '../../data/types';
-import { int, shortDate } from '../../lib/format';
 import { useThemeStore } from '../../state/useTheme';
 import { Segmented } from '../ui/Controls';
 import styles from './Header.module.css';
@@ -19,10 +17,9 @@ const VIEWS = [
 interface HeaderProps {
   view: ViewId;
   onViewChange: (view: ViewId) => void;
-  meta: DatasetMeta;
 }
 
-export function Header({ view, onViewChange, meta }: HeaderProps) {
+export function Header({ view, onViewChange }: HeaderProps) {
   const mode = useThemeStore((s) => s.mode);
   const toggleTheme = useThemeStore((s) => s.toggle);
   const isDark = mode === 'dark';
@@ -49,23 +46,6 @@ export function Header({ view, onViewChange, meta }: HeaderProps) {
       </nav>
 
       <div className={styles.meta}>
-        <dl className={styles.provenance}>
-          <div>
-            <dt>Season</dt>
-            <dd className="tabular">
-              {shortDate(meta.seasonStart)} – {shortDate(meta.seasonEnd)}
-            </dd>
-          </div>
-          <div>
-            <dt>Shots</dt>
-            <dd className="tabular">{int(meta.rowCount)}</dd>
-          </div>
-          <div>
-            <dt>Games</dt>
-            <dd className="tabular">{int(meta.gameCount)}</dd>
-          </div>
-        </dl>
-
         <button
           type="button"
           className={styles.themeToggle}

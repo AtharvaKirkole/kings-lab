@@ -1,10 +1,7 @@
 /**
  * Typed surface over the shared court geometry. The impl lives in `court.mjs`
- * (so the bare-Node ETL can import it); this adds types and is what the app
- * imports. See `court.mjs` for the full rationale.
  */
 
-// @ts-expect-error -- JSDoc-typed ESM; the declarations below are authoritative.
 import * as geom from './court.mjs';
 
 export const COURT_LENGTH: number = geom.COURT_LENGTH;

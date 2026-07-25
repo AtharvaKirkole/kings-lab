@@ -91,7 +91,7 @@ function Dashboard({ dataset }: { dataset: Dataset }) {
 
   return (
     <div className={styles.app}>
-      <Header view={view} onViewChange={setView} meta={dataset.meta} />
+      <Header view={view} onViewChange={setView} />
 
       <div className={styles.body}>
         {railOpen && <div className={styles.scrim} onClick={() => setRailOpen(false)} aria-hidden="true" />}

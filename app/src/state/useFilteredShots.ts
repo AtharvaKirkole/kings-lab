@@ -1,7 +1,5 @@
 /**
- * Derived selectors: (dataset, criteria) → the shots on screen. Kept out of the
- * store on purpose - it's a pure function, so it memoises cleanly with no cached
- * copy to invalidate. The store owns criteria; this module owns derivation.
+ * Derived selectors: (dataset, criteria) → the shots on screen.
  */
 
 import { useMemo } from 'react';
@@ -9,11 +7,6 @@ import { useMemo } from 'react';
 import type { Dataset, Shot } from '../data/types';
 import { useFilterStore, type FilterCriteria } from './useFilters';
 
-/**
- * Build one predicate from the active criteria. Only constrained fields add a
- * test (so no filters ≈ free). Values OR within a field, AND across fields -
- * the usual faceted-filter convention.
- */
 export function buildPredicate(f: FilterCriteria): (shot: Shot) => boolean {
   const tests: ((shot: Shot) => boolean)[] = [];
 
@@ -35,7 +28,7 @@ export function buildPredicate(f: FilterCriteria): (shot: Shot) => boolean {
 
   if (f.dateFrom) {
     const from = f.dateFrom;
-    tests.push((s) => s.gameDate >= from); // ISO dates compare correctly as strings
+    tests.push((s) => s.gameDate >= from);
   }
   if (f.dateTo) {
     const to = f.dateTo;
@@ -56,13 +49,7 @@ export function buildPredicate(f: FilterCriteria): (shot: Shot) => boolean {
 }
 
 export interface FilteredResult {
-  /** Shots matching every active filter. */
   shots: Shot[];
-  /**
-   * Shots matching every filter EXCEPT the player selection - the team baseline
-   * a player is measured against. Holding context constant while lifting the
-   * player restriction keeps a comparison from confounding "who" with "when".
-   */
   teamBaseline: Shot[];
   totalShots: number;
 }
@@ -70,8 +57,6 @@ export interface FilteredResult {
 export function useFilteredShots(dataset: Dataset): FilteredResult {
   const filters = useFilterStore();
 
-  // Depend on individual criteria, not the store object, so this recomputes
-  // only when a filter value actually changes.
   return useMemo(() => {
     const criteria: FilterCriteria = {
       players: filters.players,
@@ -93,8 +78,6 @@ export function useFilteredShots(dataset: Dataset): FilteredResult {
     const matches = buildPredicate(criteria);
     const shots = dataset.shots.filter(matches);
 
-    // When no player filter is set the baseline is identical to the selection;
-    // reuse the array rather than filtering the dataset a second time.
     const baselineMatches = criteria.players.length
       ? buildPredicate({ ...criteria, players: [] })
       : null;

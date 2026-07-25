@@ -1,18 +1,13 @@
 /**
- * Decodes the columnar wire format into plain `Shot` row objects. The only
- * module that knows the compact format exists; runs once at startup so the
- * payload optimisation costs the rest of the code nothing in readability.
+ * Decodes the columnar wire format into plain `Shot` row objects. 
  *
  * NOTE: The project description states the dataset is clean and asks for a
- * simple solution, so this does NO payload validation - it trusts the ETL's
- * output shape. (If the data could be dirty, schema-version / column-length /
- * unmapped-code guards would live here.)
+ * simple solution, so this does NO payload validation 
  */
 
 import { CLOCK_ORDER, CONTEST_ORDER, DRIBBLE_ORDER, RANGE_ORDER, SHOT_TYPE_ORDER, ZONE_ORDER } from '../lib/court';
 import type { Dataset, EncodedDataset, Shot } from './types';
 
-/** Order values by a canonical list; append unknowns rather than drop them. */
 function ordered(values: string[], canonical: readonly string[]): string[] {
   const known = canonical.filter((v) => values.includes(v));
   const extra = values.filter((v) => !canonical.includes(v)).sort();
@@ -57,7 +52,6 @@ export function decodeDataset(raw: unknown): Dataset {
       catchAndShoot: c.catchAndShoot[i] === 1,
       dribbles: c.dribbles[i]!,
       dribbleBucket: dict.dribbleBucket[c.dribbleBucket[i]!]!,
-      // The ETL encodes "no preceding pass" as -1 to keep the column numeric.
       passDistance: passDistance < 0 ? null : passDistance,
 
       contested: c.contested[i] === 1,
@@ -75,8 +69,6 @@ export function decodeDataset(raw: unknown): Dataset {
     shots,
     options: {
       shotTypes: ordered(dict.shotType, SHOT_TYPE_ORDER),
-      // No meaningful canonical order; sort by team volume so the busiest
-      // play types surface first in the filter list.
       complexShotTypes: rankByFrequency(shots, (s) => s.complexShotType),
       contestLevels: ordered(dict.contestLevel, CONTEST_ORDER),
       zones: ordered(dict.zone, ZONE_ORDER),

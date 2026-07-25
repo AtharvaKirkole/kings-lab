@@ -1,11 +1,5 @@
 /**
  * Filter state <-> query string, so any slice can be shared as a link.
- *
- * The store is already flat and serialisable, so this is a straight mapping.
- * Only non-default values are written, which keeps a clean URL clean.
- *
- * Writes use replaceState, not pushState: a filter rail is a dial, not a page,
- * and pushing would put a history entry behind every chip click.
  */
 
 import type { ViewId } from '../components/layout/Header';
@@ -14,7 +8,6 @@ import type { FilterCriteria, MultiFilterKey } from './useFilters';
 const VIEWS: ViewId[] = ['court', 'efficiency', 'players'];
 const DEFAULT_VIEW: ViewId = 'court';
 
-/** Short, readable param names. No dataset value contains a comma. */
 const MULTI_PARAMS: Record<MultiFilterKey, string> = {
   players: 'player',
   zones: 'zone',
@@ -29,13 +22,10 @@ const MULTI_PARAMS: Record<MultiFilterKey, string> = {
 
 const MULTI_KEYS = Object.keys(MULTI_PARAMS) as MultiFilterKey[];
 
-/** `1` / `0` for the two tri-state filters; absent means "no constraint". */
 const readTristate = (raw: string | null): boolean | null =>
   raw === '1' ? true : raw === '0' ? false : null;
 
 export function readFiltersFromUrl(): Partial<FilterCriteria> {
-  if (typeof window === 'undefined') return {};
-
   const params = new URLSearchParams(window.location.search);
   const criteria: Partial<FilterCriteria> = {};
 
@@ -59,7 +49,6 @@ export function readFiltersFromUrl(): Partial<FilterCriteria> {
 }
 
 export function readViewFromUrl(): ViewId {
-  if (typeof window === 'undefined') return DEFAULT_VIEW;
   const view = new URLSearchParams(window.location.search).get('view');
   return VIEWS.includes(view as ViewId) ? (view as ViewId) : DEFAULT_VIEW;
 }

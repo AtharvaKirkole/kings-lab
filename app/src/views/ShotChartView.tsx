@@ -1,8 +1,6 @@
 /**
  * View 1 - Shot Chart: WHERE shots come from and HOW they convert. Three layers
- * off one slice: Zones (summary), Hexes (hot/cold detail), Shots (raw evidence).
- * Clicking a zone toggles it in the global filter, so the chart is also a nav
- * control - "left wing looks cold" → that exact breakdown in one click.
+ * off one slice: Zones, Hexes , Shots .
  */
 
 import { useCallback, useMemo, useRef, useState } from 'react';
@@ -52,7 +50,7 @@ interface ShotChartViewProps {
 export function ShotChartView({ shots, teamBaseline }: ShotChartViewProps) {
   const [layer, setLayer] = useState<LayerId>('zones');
   const [colorMode, setColorMode] = useState<ZoneColorMode>('efficiency');
-  const [courtView, setCourtView] = useState<CourtView>('half');
+  const [courtView, setCourtView] = useState<CourtView>('full');
   const [showGrid, setShowGrid] = useState(true);
 
   const selectedZones = useFilterStore((s) => s.zones);
@@ -78,7 +76,6 @@ export function ShotChartView({ shots, teamBaseline }: ShotChartViewProps) {
     return { x: point.x, y: point.y };
   }, []);
 
-  /** Distance-band breakdown beside the court. Ordinal -> ordinal ramp. */
   const rangeBars: BarDatum[] = useMemo(() => {
     const groups = groupBy(shots, (s) => s.rangeBand, RANGE_ORDER as string[]);
     const baselineGroups = new Map(

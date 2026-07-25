@@ -67,32 +67,6 @@
   gap: var(--space-5);
 }
 
-.provenance {
-  display: flex;
-  gap: var(--space-5);
-}
-
-.provenance div {
-  display: flex;
-  flex-direction: column;
-  gap: 1px;
-}
-
-.provenance dt {
-  font-size: 9.5px;
-  font-weight: 650;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--ink-muted);
-}
-
-.provenance dd {
-  font-size: 12px;
-  font-weight: 600;
-  color: var(--ink-secondary);
-  white-space: nowrap;
-}
-
 .themeToggle {
   display: inline-flex;
   align-items: center;
@@ -120,12 +94,6 @@
 .themeLabel {
   min-width: 30px;
   text-align: left;
-}
-
-@media (max-width: 1200px) {
-  .provenance {
-    display: none;
-  }
 }
 
 @media (max-width: 860px) {

@@ -1,8 +1,6 @@
 /**
  * View 2 - Efficiency: WHICH shots pay, and how CONTEXT changes them. The matrix
- * is the centrepiece because shot quality is two-variable (a floater is good
- * open, bad contested) - a single ranked list hides that. Points per shot is the
- * headline unit throughout (exactly 2 × eFG%, in a unit coaches argue in).
+ * is the centrepiece because shot quality is two-variable
  */
 
 import { useMemo } from 'react';
@@ -21,7 +19,6 @@ import { groupBy, LOW_SAMPLE_THRESHOLD, summarise } from '../lib/metrics';
 import { useFilterStore } from '../state/useFilters';
 import styles from './EfficiencyView.module.css';
 
-/** Play types below this volume are dropped from the ranking, not greyed out. */
 const MIN_PLAY_TYPE_ATTEMPTS = 40;
 
 interface EfficiencyViewProps {
@@ -36,7 +33,6 @@ export function EfficiencyView({ shots }: EfficiencyViewProps) {
 
   const overall = useMemo(() => summarise(shots), [shots]);
 
-  // --- Matrix: shot type x defensive pressure -------------------------------
   const matrix = useMemo(() => {
     const rows = SHOT_TYPE_ORDER.filter((t) => shots.some((s) => s.shotType === t));
     const columns = CONTEST_ORDER.filter((c) => shots.some((s) => s.contestLevel === c));
@@ -50,7 +46,6 @@ export function EfficiencyView({ shots }: EfficiencyViewProps) {
           value: stats.pps,
           display: stats.pps.toFixed(2),
           count: bucket.length,
-          // Colour by eFG% delta so the scale matches the court exactly.
           fill: stats.lowSample ? 'var(--eff-neutral)' : efficiencyColor((stats.efg - overall.efg) * 100),
           lowSample: stats.lowSample,
         };
@@ -60,7 +55,7 @@ export function EfficiencyView({ shots }: EfficiencyViewProps) {
     return { rows, columns, cells };
   }, [shots, overall.efg]);
 
-  // --- Play-type ranking ----------------------------------------------------
+  // Play-type ranking 
   const playTypes: BarDatum[] = useMemo(() => {
     return groupBy(shots, (s) => s.complexShotType)
       .filter((g) => g.attempts >= MIN_PLAY_TYPE_ATTEMPTS)
@@ -76,20 +71,16 @@ export function EfficiencyView({ shots }: EfficiencyViewProps) {
       }));
   }, [shots, overall.pps]);
 
-  // --- Context breakdowns ---------------------------------------------------
   const clockBars = useContextBars(shots, (s) => s.clockBucket, CLOCK_ORDER, overall.pps);
   const dribbleBars = useContextBars(shots, (s) => s.dribbleBucket, DRIBBLE_ORDER, overall.pps);
   const contestBars = useContextBars(shots, (s) => s.contestLevel, CONTEST_ORDER, overall.pps, humanise);
 
-  // --- Derived observations -------------------------------------------------
   const insights = useMemo(() => buildInsights(shots, overall.pps), [shots, overall.pps]);
 
   if (shots.length === 0) return <EmptyState onClear={resetFilters} />;
 
   const uncontested = summarise(shots.filter((s) => s.contestLevel === 'uncontested'));
   const heavy = summarise(shots.filter((s) => s.contestLevel === 'heavily_contested'));
-  const catchShoot = summarise(shots.filter((s) => s.catchAndShoot));
-  const offDribble = summarise(shots.filter((s) => !s.catchAndShoot));
 
   return (
     <div className={styles.view}>
@@ -99,13 +90,6 @@ export function EfficiencyView({ shots }: EfficiencyViewProps) {
           label="Contest tax"
           value={`${(uncontested.pps - heavy.pps).toFixed(2)}`}
           detail={`${uncontested.pps.toFixed(2)} open vs ${heavy.pps.toFixed(2)} heavy`}
-        />
-        <StatTile
-          label="Catch & shoot"
-          value={catchShoot.pps.toFixed(2)}
-          delta={(catchShoot.efg - offDribble.efg) * 100}
-          deltaLabel="eFG vs off-dribble"
-          detail={`${pct(catchShoot.attempts / overall.attempts, 0)} of attempts`}
         />
         <StatTile
           label="Heavily contested"
@@ -232,10 +216,6 @@ interface Insight {
   detail: string;
 }
 
-/**
- * Rule-based readouts - deliberately arithmetic, not statistical: each line is a
- * difference you can verify in the charts above. Low-sample cases are skipped.
- */
 function buildInsights(shots: readonly Shot[], overallPps: number): Insight[] {
   const insights: Insight[] = [];
 

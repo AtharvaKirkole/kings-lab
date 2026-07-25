@@ -1,17 +1,15 @@
 # Kings Shot Lab
 
-A shot-profile dashboard for 12 players from the 2024–25 regular
-season. It answers four questions a staff actually asks:
+A shot-profile dashboard. It answers four questions a staff actually asks:
 
 - Which players take which shots, and from where?
 - Which shots are efficient, and which aren't?
 - How does shot-making change with context: defense, shot clock, dribbles?
 - How does each player deviate from the team profile?
-
-**8,816 shots & 12 players & 160 games & 2024-10-22 to 2025-04-13**
-
 ---
 COMPLETE USAGE VEDIO LINK: 
+
+COMPLETE CODE WALKTHROUGH VEDIO LINK: 
 
 ## Run it
 
@@ -91,11 +89,11 @@ breakdowns (pressure, shot clock, dribbles).
 
 ![Scatter and shot-making](docs/screenshots/07-scatter-and-shot-making.png)
 
-*The roster scatter with Player E selected, and his eFG% deltas by zone.*
+*Top half of the quadrant layout: the player card on the left, the roster scatter on the right.*
 
 ![Shot-selection and focus](docs/screenshots/08-shot-selection-and-focus.png)
 
-*Scrolled down to the shot-selection deltas and the focus strip.*
+*Bottom half: shot-making and shot-selection deltas sitting side by side.*
 
 ### Filters and theming
 
@@ -105,7 +103,7 @@ The filter section is drag resizable and light and dark themes are both supporte
 
 ![Light mode](docs/screenshots/09-light-mode.png)
 
-*The same Player vs Team view in light mode.*
+*The same two delta quadrants in light mode.*
 
 ---
 
@@ -165,3 +163,9 @@ For millions of shots or many seasons:
   larger sample would justify confidence intervals.
 
 // LATEST ADDED: URL CAN BE COPIED WITH THE FILTERS!
+
+**NOTE**: Codex was used only for generating non-core implementation artifacts, such as UI styling (.css), color/theme configuration files, and compiling package-lock.json and help with documentation. All application logic, architecture, and core functionality were implemented independently. 
+
+I did not see any project guidelines prohibiting the use of AI assistance for these auxiliary tasks. 
+
+If such usage is not permitted, I can regenerate or recompile these files without AI assistance.

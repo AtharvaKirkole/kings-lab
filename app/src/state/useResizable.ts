@@ -1,8 +1,3 @@
-/**
- * Pointer-drag panel resizing. A hook so the drag maths (capture, clamp,
- * persist) lives in one place and the component just spreads the returned props.
- * Width persists to localStorage. The rail only mounts the handle while docked.
- */
 
 import { useCallback, useEffect, useRef, useState } from 'react';
 
@@ -11,32 +6,25 @@ interface ResizableOptions {
   defaultWidth: number;
   min: number;
   max: number;
-  /** +1 grows when dragging right (handle on the panel's right edge). */
   direction?: 1 | -1;
 }
 
 interface Resizable {
   width: number;
   isResizing: boolean;
-  /** Spread onto the drag handle element. */
   handleProps: {
     onPointerDown: (event: React.PointerEvent) => void;
     onKeyDown: (event: React.KeyboardEvent) => void;
     onDoubleClick: () => void;
   };
-  /** Reset to the default width (also bound to double-click). */
   reset: () => void;
 }
 
 function readStored(key: string, fallback: number, min: number, max: number): number {
-  try {
-    const raw = localStorage.getItem(key);
-    if (raw) {
-      const value = Number(raw);
-      if (Number.isFinite(value)) return Math.min(max, Math.max(min, value));
-    }
-  } catch {
-    // Ignore unavailable storage.
+  const raw = localStorage.getItem(key);
+  if (raw) {
+    const value = Number(raw);
+    if (Number.isFinite(value)) return Math.min(max, Math.max(min, value));
   }
   return fallback;
 }
@@ -45,18 +33,13 @@ export function useResizable({ storageKey, defaultWidth, min, max, direction = 1
   const [width, setWidth] = useState(() => readStored(storageKey, defaultWidth, min, max));
   const [isResizing, setIsResizing] = useState(false);
 
-  // Live values for the pointer handlers, so they never close over stale state.
   const dragState = useRef({ startX: 0, startWidth: 0 });
 
   const clamp = useCallback((value: number) => Math.min(max, Math.max(min, value)), [min, max]);
 
   const persist = useCallback(
     (value: number) => {
-      try {
-        localStorage.setItem(storageKey, String(Math.round(value)));
-      } catch {
-        // Non-fatal.
-      }
+      localStorage.setItem(storageKey, String(Math.round(value)));
     },
     [storageKey],
   );
@@ -64,15 +47,13 @@ export function useResizable({ storageKey, defaultWidth, min, max, direction = 1
   const onPointerDown = useCallback(
     (event: React.PointerEvent) => {
       event.preventDefault();
-      (event.target as Element).setPointerCapture?.(event.pointerId);
+      (event.target as Element).setPointerCapture(event.pointerId);
       dragState.current = { startX: event.clientX, startWidth: width };
       setIsResizing(true);
     },
     [width],
   );
 
-  // The move/up listeners live on window during a drag so the pointer can leave
-  // the thin handle without dropping the gesture.
   useEffect(() => {
     if (!isResizing) return;
 
@@ -98,8 +79,6 @@ export function useResizable({ storageKey, defaultWidth, min, max, direction = 1
     };
   }, [isResizing, clamp, direction, persist]);
 
-  // Keyboard resizing: the handle is a focusable separator, so arrow keys must
-  // move it too (WAI-ARIA window-splitter pattern).
   const onKeyDown = useCallback(
     (event: React.KeyboardEvent) => {
       const step = event.shiftKey ? 32 : 12;

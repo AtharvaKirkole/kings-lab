@@ -20,9 +20,7 @@ const RAIL_DEFAULT = 292;
 
 /** Docked (wide) vs overlay drawer. */
 function useIsDocked(): boolean {
-  const [docked, setDocked] = useState(
-    () => typeof window !== 'undefined' && window.matchMedia('(min-width: 1025px)').matches,
-  );
+  const [docked, setDocked] = useState(() => window.matchMedia('(min-width: 1025px)').matches);
   useEffect(() => {
     const mql = window.matchMedia('(min-width: 1025px)');
     const onChange = (e: MediaQueryListEvent) => setDocked(e.matches);

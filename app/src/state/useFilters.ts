@@ -1,15 +1,12 @@
 /**
  * Filter state. One Zustand store; components subscribe to just their slice, so
- * moving a control doesn't re-render the court's thousands of marks (Context
- * would). Holds *criteria only* - derived shots live in `useFilteredShots`, so
- * there's one copy of the truth and nothing goes stale.
+ * moving a control doesn't re-render the court's thousands of marks
  */
 
 import { create } from 'zustand';
 
 import { readFiltersFromUrl } from './urlState';
 
-/** Fields that hold a set of selected values. */
 export type MultiFilterKey =
   | 'players' | 'zones' | 'shotTypes' | 'complexShotTypes'
   | 'contestLevels' | 'clockBuckets' | 'rangeBands' | 'dribbleBuckets' | 'periods';
@@ -26,13 +23,7 @@ export interface FilterCriteria {
   periods: string[];
   dateFrom: string | null;
   dateTo: string | null;
-  /** `null` = no constraint, `true` = catch-and-shoot only, `false` = off-the-dribble only. */
   catchAndShoot: boolean | null;
-  /**
-   * Assist-opportunity filter (`ast_opp`: ≤1 dribble, held <2.5s) - NOT the
-   * `assisted` flag, which is true only on makes and would force FG% to 100%.
-   * `ast_opp` describes the look and covers makes and misses alike.
-   */
   astOpp: boolean | null;
   clutchOnly: boolean;
 }
@@ -55,21 +46,17 @@ export const EMPTY_FILTERS: FilterCriteria = {
 };
 
 interface FilterStore extends FilterCriteria {
-  /** Add or remove one value from a multi-select field. */
   toggle: (key: MultiFilterKey, value: string) => void;
-  /** Replace a multi-select field wholesale. */
   setMany: (key: MultiFilterKey, values: string[]) => void;
   setDateRange: (from: string | null, to: string | null) => void;
   setTristate: (key: 'catchAndShoot' | 'astOpp', value: boolean | null) => void;
   setClutchOnly: (value: boolean) => void;
-  /** Clear one field, or every field when called with no argument. */
   clear: (key?: MultiFilterKey) => void;
   reset: () => void;
 }
 
 export const useFilterStore = create<FilterStore>((set) => ({
-  // Defaults first, then anything the URL carried in, so a shared link opens
-  // on the same slice the sender was looking at.
+
   ...EMPTY_FILTERS,
   ...readFiltersFromUrl(),
 
@@ -94,7 +81,7 @@ export const useFilterStore = create<FilterStore>((set) => ({
   reset: () => set(EMPTY_FILTERS),
 }));
 
-/** Number of active constraints -- drives the "clear filters" affordance. */
+/** Number of active constraints - drives the "clear filters" affordance. */
 export function countActiveFilters(f: FilterCriteria): number {
   let n = 0;
   const multi: MultiFilterKey[] = [
