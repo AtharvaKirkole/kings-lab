@@ -1,4 +1,5 @@
 # Kings Shot Lab
+Live website link: https://atharvakirkole.github.io/kings-lab
 
 A shot-profile dashboard. It answers four questions a staff actually asks:
 
@@ -164,8 +165,6 @@ For millions of shots or many seasons:
 
 // LATEST ADDED: URL CAN BE COPIED WITH THE FILTERS!
 
-**NOTE**: Codex was used only for generating non-core implementation artifacts, such as UI styling (.css), color/theme configuration files, and compiling package-lock.json and help with documentation. All application logic, architecture, and core functionality were implemented independently. 
-
-I did not see any project guidelines prohibiting the use of AI assistance for these auxiliary tasks. 
-
-If such usage is not permitted, I can regenerate or recompile these files without AI assistance.
+**NOTE**: Codex was used for styling (.css), color/theme configuration files, and compiling package-lock.json and help with documentation. All application logic, architecture, and core functionality were implemented independently. 
+I did not see any project guidelines prohibiting the use of AI assistance for these auxiliary tasks so was executed so.
+If such usage is not permitted, I can regenerate or recompile these files without AI styles CSS.
