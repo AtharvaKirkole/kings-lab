@@ -152,7 +152,9 @@ export function FilterRail({ dataset, shots, open, onClose }: FilterRailProps) {
               <Chip
                 key={player.id}
                 active={filters.players.includes(player.id)}
-                onClick={() => filters.toggle('players', player.id)}
+                onClick={() =>
+                  filters.setMany('players', filters.players.includes(player.id) ? [] : [player.id])
+                }
                 count={playerCounts.get(player.id) ?? 0}
                 title={`${player.name}: ${player.attempts} shots, ${player.games} games`}
               >

@@ -60,18 +60,6 @@
   color: var(--ink-muted);
 }
 
-.footnote {
-  font-size: 11.5px;
-  line-height: 1.6;
-  color: var(--ink-muted);
-  padding: 0 var(--space-1);
-}
-
-.footnote em {
-  font-style: italic;
-  color: var(--ink-secondary);
-}
-
 @media (max-width: 1080px) {
   .quadrants {
     grid-template-columns: minmax(0, 1fr);

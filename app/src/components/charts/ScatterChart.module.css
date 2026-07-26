@@ -62,9 +62,10 @@
 }
 
 .markSelected .bubble {
-  fill: var(--kings-purple);
-  fill-opacity: 0.95;
-  stroke: var(--kings-purple-bright);
+  fill: #ff2d55;
+  fill-opacity: 1;
+  stroke: #ffffff;
+  stroke-width: 2.5;
 }
 
 .markLabel {

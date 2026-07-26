@@ -23,7 +23,6 @@ import { useFilterStore } from '../state/useFilters';
 import styles from './PlayerCompareView.module.css';
 
 interface PlayerCompareViewProps {
-  shots: Shot[];
   teamBaseline: Shot[];
 }
 
@@ -34,9 +33,8 @@ interface PlayerRow extends ShotSummary {
   rimRate: number;
 }
 
-export function PlayerCompareView({ shots, teamBaseline }: PlayerCompareViewProps) {
+export function PlayerCompareView({ teamBaseline }: PlayerCompareViewProps) {
   const selectedPlayers = useFilterStore((s) => s.players);
-  const togglePlayer = useFilterStore((s) => s.toggle);
   const setPlayers = useFilterStore((s) => s.setMany);
   const resetFilters = useFilterStore((s) => s.reset);
 
@@ -126,7 +124,6 @@ export function PlayerCompareView({ shots, teamBaseline }: PlayerCompareViewProp
       <div className={styles.quadrants}>
         <Card
           title={focus ? focus.name : selectedPlayers.length > 1 ? `${selectedPlayers.length} players` : 'Whole team'}
-          subtitle={focus ? `${int(focus.attempts)} attempts under the active filters` : undefined}
           actions={
             focus ? <Button onClick={() => setPlayers('players', [])}>Clear focus</Button> : undefined
           }
@@ -181,10 +178,7 @@ export function PlayerCompareView({ shots, teamBaseline }: PlayerCompareViewProp
           </div>
         </Card>
 
-        <Card
-          title="Volume against efficiency"
-          subtitle="Bubble area is attempts. Dashed lines mark the team average. Click a player to profile them."
-        >
+        <Card title="Volume against efficiency">
           <ScatterChart
             data={scatter}
             xLabel="Field-goal attempts"
@@ -193,7 +187,7 @@ export function PlayerCompareView({ shots, teamBaseline }: PlayerCompareViewProp
             yReference={team.efg * 100}
             formatX={(v) => int(v)}
             formatY={(v) => `${v.toFixed(0)}%`}
-            onSelect={(key) => togglePlayer('players', key)}
+            onSelect={(key) => setPlayers('players', selectedPlayers.includes(key) ? [] : [key])}
             selected={selectedPlayers}
             quadrantLabels={['Efficient, low usage', 'Efficient, high usage', 'Inefficient, high usage', 'Low usage']}
           />
@@ -243,11 +237,6 @@ export function PlayerCompareView({ shots, teamBaseline }: PlayerCompareViewProp
           )}
         </Card>
       </div>
-
-      <p className={styles.footnote}>
-        Showing {int(shots.length)} of {int(teamBaseline.length)} shots under the active filters.
-        A player is always measured against the roster under the <em>same</em> filters.
-      </p>
     </div>
   );
 }

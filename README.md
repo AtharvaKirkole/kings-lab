@@ -50,19 +50,15 @@ The court is drawn in real court length, with three switchable layers:
 
 ![Zones by efficiency](docs/screenshots/01-zones-efficiency.png)
 
-*Zones on efficiency colouring, hovering Corner 3 Left for the full breakdown.*
+*Zones on efficiency colouring, blue below average and red above.*
 
-![Zones by volume](docs/screenshots/02-zones-volume.png)
+![Hex layer](docs/screenshots/02-hexes.png)
 
-*Same zones on volume colouring, filtered to threes on purpose so only 3 zones light up and you can see the filter driving the court.*
+*Hexes, size is attempts and colour is eFG% against the baseline.*
 
-![Hex layer](docs/screenshots/03-hexes.png)
+![Shot layer](docs/screenshots/03-shots.png)
 
-*Hexes for one player, size is attempts and colour is eFG% against the baseline.*
-
-![Shot layer](docs/screenshots/04-shots.png)
-
-*Every individual attempt for one player's Q4 jumpers, green made and red missed.*
+*Every one of the 8,816 attempts, green made and red missed.*
 
 ### 2. Efficiency: which shots pay, and how context changes them
 
@@ -71,40 +67,38 @@ quality is two-variable: the same floater is a good shot open and a bad one
 contested. A single ranked list hides that. play types by value, context
 breakdowns (pressure, shot clock, dribbles).
 
-![Shot quality matrix](docs/screenshots/05-shot-quality-matrix.png)
+![Shot quality matrix](docs/screenshots/04-shot-quality-matrix.png)
 
-*The matrix, where a layup goes from 1.84 open to 0.88 heavily contested.*
+*The matrix for one player, where a layup goes from 1.85 open to 0.92 heavily contested.*
 
-![Play types and context](docs/screenshots/06-play-types-and-context.png)
+![Play types and context](docs/screenshots/05-play-types-and-context.png)
 
 *Play types ranked by points per shot, with the pressure, shot clock and dribble breakdowns beside them.*
 
 ### 3. Player vs Team: how each player deviates
 
+Four quadrants:
+
+- **Player card** with a points-added figure (points above or below what the team
+  would score on the same shot distribution).
 - **Volume vs efficiency scatter**, bubble area = attempts, crosshair at team means.
 - **Two bars side by side**: shot-*making* (eFG% vs team, per zone) and
   shot-*selection* (attempt share vs team). A player can be +8 eFG% in the corners
   while taking fewer of them... that's a play design finding, not a shooting one.
-- **Roster table** with a points-added column (points above or below what the team
-  would score on the same shot distribution).
 
-![Scatter and shot-making](docs/screenshots/07-scatter-and-shot-making.png)
+![Player card and scatter](docs/screenshots/06-player-card-and-scatter.png)
 
-*Top half of the quadrant layout: the player card on the left, the roster scatter on the right.*
+*Top two quadrants: the player card on the left, the roster scatter on the right with the selected player in red.*
 
-![Shot-selection and focus](docs/screenshots/08-shot-selection-and-focus.png)
+![Zone deltas in light mode](docs/screenshots/07-zone-deltas-light.png)
 
-*Bottom half: shot-making and shot-selection deltas sitting side by side.*
+*Bottom two quadrants, here in light mode: shot-making and shot-selection deltas side by side.*
 
 ### Filters and theming
 
 One filter base shared by all three views, so a it survives switching views.
-Every option shows a live attempt count.
+Every option shows a live attempt count, and only one player can be selected at a time.
 The filter section is drag resizable and light and dark themes are both supported.
-
-![Light mode](docs/screenshots/09-light-mode.png)
-
-*The same two delta quadrants in light mode.*
 
 ---
 

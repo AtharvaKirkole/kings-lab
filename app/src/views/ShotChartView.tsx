@@ -16,7 +16,7 @@ import { EmptyState } from '../components/ui/States';
 import { StatTile } from '../components/ui/StatTile';
 import { useHoverTooltip } from '../components/ui/Tooltip';
 import type { Shot } from '../data/types';
-import { EFFICIENCY_LEGEND, volumeColor, VOLUME_LEGEND } from '../lib/colorScale';
+import { EFFICIENCY_LEGEND, VOLUME_LEGEND } from '../lib/colorScale';
 import { RANGE_ORDER } from '../lib/court';
 import { int, pct } from '../lib/format';
 import { groupBy, summarise } from '../lib/metrics';
@@ -232,7 +232,6 @@ export function ShotChartView({ shots, teamBaseline }: ShotChartViewProps) {
           <Card title="Distance mix" subtitle="Share of attempts by distance band, with points per shot.">
             <BarChart
               data={rangeBars}
-              colorFor={(_, index) => volumeColor(index + 1, rangeBars.length)}
               baselineLabel={comparing ? 'Team share' : undefined}
             />
           </Card>

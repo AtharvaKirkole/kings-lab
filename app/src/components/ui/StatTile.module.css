@@ -5,18 +5,10 @@
   min-width: 0;
   padding: var(--space-4) var(--space-4) var(--space-3);
   background: var(--surface);
-  border: 1px solid var(--line-hairline);
+  border: 2px solid var(--kings-purple);
   border-radius: var(--radius-md);
   position: relative;
   overflow: hidden;
-}
-
-.tile::before {
-  content: '';
-  position: absolute;
-  inset: 0 auto 0 0;
-  width: 3px;
-  background: linear-gradient(180deg, var(--kings-purple-bright), var(--kings-purple));
 }
 
 .label {
@@ -31,9 +23,10 @@
 }
 
 .value {
-  font-size: 26px;
-  font-weight: 700;
-  letter-spacing: -0.025em;
+  font-family: var(--font-mono);
+  font-size: 24px;
+  font-weight: 600;
+  letter-spacing: -0.03em;
   line-height: 1.15;
   color: var(--ink-primary);
 }
