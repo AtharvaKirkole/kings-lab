@@ -8,9 +8,6 @@ A shot-profile dashboard. It answers four questions a staff actually asks:
 - How does shot-making change with context: defense, shot clock, dribbles?
 - How does each player deviate from the team profile?
 ---
-COMPLETE USAGE VEDIO LINK: 
-
-COMPLETE CODE WALKTHROUGH VEDIO LINK: 
 
 ## Run it
 
@@ -147,6 +144,11 @@ For millions of shots or many seasons:
 - **Serving:** add a thin aggregation API taht send raw shots only for the current filter.
 - **Client:** render the shot layer on canvas/WebGL instead of thousands of DOM
   nodes; I have experiance with WebGL: https://atharvakirkole.github.io
+  
+One direction I'd love to explore at scale: a graph neural network over lineup
+data, paired with a transformer over possession sequences, applied to
+substitution and trade decisions. EA's World Cup simulations have called
+several recent winners, and NBA data is richer with cleaner metrics.
 
 ---
 
@@ -159,6 +161,6 @@ For millions of shots or many seasons:
 
 // LATEST ADDED: URL CAN BE COPIED WITH THE FILTERS!
 
-**NOTE**: Codex was used for styling (.css), color/theme configuration files, and compiling package-lock.json and help with documentation. All application logic, architecture, and core functionality were implemented independently. 
+**NOTE**: Codex and prior Sports Analytics Club(Michighan State University) ideas were used for styling (.css), color/theme configuration files, and compiling files like package-lock.json and help with documentation. All application logic, architecture, and core functionality were implemented independently. 
 I did not see any project guidelines prohibiting the use of AI assistance for these auxiliary tasks so was executed so.
 If such usage is not permitted, I can regenerate or recompile these files without AI styles CSS.
