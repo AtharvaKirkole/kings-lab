@@ -9,6 +9,7 @@ A shot-profile dashboard. It answers four questions a staff actually asks:
 - How does each player deviate from the team profile?
 ---
 
+walkthrough video: https://youtu.be/3x3U73fLoXQ
 ## Run it
 
 Needs **Node 18+**. Everything lives in the `app/` folder.
